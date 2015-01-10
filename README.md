@@ -20,7 +20,7 @@ In order for ElFi to work, you need:
 - Pair your NEXA devices with the Arduino (see the COSA example NEXA/CosaNEXAsender.ino) giving your devices numbers ranging from 0 to 15.
 - Modify the elfi.ino file to suit your needs, e.g. adding/removing devices, set up device timers etc. Add the ElFi header files to the Arduino Sketch (you can use drag-n-drop).
 - Compile and upload to your Arduino.
-- In your router, dedicate an LAN IP adress to the Arduino e.g. by using the MAC adress of the Arduino Ethernet Sheild. (In my case the Arduino has got the dedicated LAN IP 10.0.1.190.)
+- In your router, dedicate an LAN IP adress to the Arduino e.g. by using the MAC adress of the Arduino Ethernet Sheild. (In my case the Arduino listens to the dedicated LAN IP 10.0.1.190.)
 - Open web browser and write the dedicated IP address (10.0.1.190) to access the web page hosted by ElFi.
 
 Good luck!
