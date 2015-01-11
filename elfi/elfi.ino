@@ -130,8 +130,8 @@ FunctionTimer functionTimers[1] = {
 DeviceTimer deviceTimers[5] = {
   DeviceTimer(weekDays,     6, 40,  0, all, on),       //  1 Weekday morning on
   DeviceTimer(weekDays,     7, 25,  0, all, off),      //  2 Weekday morning off
-  DeviceTimer(weekDays,    22, 30,  0, all, on),       //  3 Weekday night off
-  DeviceTimer(weekendDays,  8, 30,  0, all, off),      //  4 Weekend morning on
+  DeviceTimer(weekDays,    22, 30,  0, all, off),      //  3 Weekday night off
+  DeviceTimer(weekendDays,  8, 30,  0, all, on),       //  4 Weekend morning on
   DeviceTimer(allDays,     23, 30,  0, all, off)       //  5 All days night off
 };
 
