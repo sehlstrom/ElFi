@@ -33,6 +33,11 @@
  * Subclass of HTTP::Server, a server request handler class. Implements project
  * specific on_request() function to produce response to HTTP requests.
  *
+ *
+ * @section Acknowledgements
+ * The WebServer header is basically a copy of the Cosa Pin Web Server example
+ * related to the Cosa library by Mikael Patel. See references for more details.
+ *
  * @section References
  * 1. CosaPinWebServer.ino example file.
  * https://github.com/mikaelpatel/Cosa/tree/master/examples/Ethernet/CosaPinWebServer

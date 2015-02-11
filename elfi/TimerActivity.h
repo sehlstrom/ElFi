@@ -29,6 +29,10 @@
  * The device timer transmitts a given commad at a given time at specified days
  * of the week.
  *
+ * @section Acknowledgements
+ * The class is based on the Cosa Activity example related to the Cosa
+ * library by Mikael Patel. See references for more details.
+ *
  * @section References
  * 1. CosaActivity.ino example file for implementing the Cosa Activity class.
  * https://github.com/mikaelpatel/Cosa/tree/master/examples/Time/CosaActivity
@@ -84,6 +88,10 @@ class DeviceTimer : public Activity {
 /**
  * The function timer runs a specified function at a given time at specified days
  * of the week.
+ *
+ * @section Acknowledgements
+ * The class is based on the Cosa Activity example related to the Cosa
+ * library by Mikael Patel. See references for more details.
  *
  * @section References
  * 1. CosaActivity.ino example file for implementing the Cosa Activity class.

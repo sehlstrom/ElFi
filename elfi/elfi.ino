@@ -167,6 +167,11 @@ NEXA::Transmitter transmitter(Board::D9, 0xc05a01L);
  * interface buttons. The interface design is controlled via a header defined
  * style (CSS).
  *
+ * @section Acknowledgements
+ * Kudos to Mikael Patel for the the idea of putting large static peices of text
+ * in the program memory; this approach reduced the usage of dynamic memory
+ * substantionally. See references and WebServer.h for more details.
+ *
  * @section References
  * 1. CosaPinWebServer.ino example file.
  * https://github.com/mikaelpatel/Cosa/tree/master/examples/Ethernet/CosaPinWebServer
@@ -422,6 +427,10 @@ update_RTC()
 
 /**
  * Get the current time from a NTP.
+ *
+ * @section Acknowledgements
+ * The function is based on the Cosa NTP example related to the Cosa
+ * library by Mikael Patel. See references for more details.
  *
  * @section References
  * 1. CosaNTP.ino example file.
