@@ -265,7 +265,7 @@ WebServer::on_request(IOStream& page, char* method, char* path, char* query)
   // Handle queries
   if (query != NULL)
   {
-    char *function;
+    const char *function;
    
     function = "all_devices_on";
     if(strcmp(query, function) == 0) {
