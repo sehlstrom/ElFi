@@ -125,7 +125,7 @@ const uint8_t on = 1;
 const uint8_t off = 0;
 
 FunctionTimer functionTimers[1] = {
-  FunctionTimer(weekDays,   6, 40,  0, &update_RTC),   //  1 Update the RTC
+  FunctionTimer(weekDays,   3,  0,  0, &update_RTC),   //  1 Update the RTC
 };
 
 DeviceTimer deviceTimers[6] = {
