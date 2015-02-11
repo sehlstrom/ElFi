@@ -116,6 +116,7 @@ Alarm::Scheduler scheduler;
 // DeviceTimer activities
 const uint8_t allDays[7] = {1, 1, 1, 1, 1, 1, 1};
 const uint8_t weekDays[7] = {0, 1, 1, 1, 1, 1, 0};
+const uint8_t beforeWorkday[7] = {1, 1, 1, 1, 1, 0, 0};
 const uint8_t weekendDays[7] = {1, 0, 0, 0, 0, 0, 1};
 
 const uint8_t all = -1;
@@ -127,12 +128,13 @@ FunctionTimer functionTimers[1] = {
   FunctionTimer(weekDays,   6, 40,  0, &update_RTC),   //  1 Update the RTC
 };
 
-DeviceTimer deviceTimers[5] = {
-  DeviceTimer(weekDays,     6, 40,  0, all, on),       //  1 Weekday morning on
-  DeviceTimer(weekDays,     7, 25,  0, all, off),      //  2 Weekday morning off
-  DeviceTimer(weekDays,    22, 30,  0, all, off),      //  3 Weekday night off
-  DeviceTimer(weekendDays,  8, 30,  0, all, on),       //  4 Weekend morning on
-  DeviceTimer(allDays,     23, 30,  0, all, off)       //  5 All days night off
+DeviceTimer deviceTimers[6] = {
+  DeviceTimer(weekDays,       6, 30,  0, all, on),     //  1 Weekday morning on
+  DeviceTimer(weekDays,       6, 40,  0, all, on),     //  2 Weekday morning on
+  DeviceTimer(weekDays,       7, 25,  0, all, off),    //  3 Weekday morning off
+  DeviceTimer(beforeWorkday, 22, 30,  0, all, off),    //  4 Before workday night off
+  DeviceTimer(weekendDays,    8, 30,  0, all, on),     //  5 Weekend morning on
+  DeviceTimer(allDays,       23, 30,  0, all, off)     //  6 All days night off
 };
 
 // DHCP, ethernet and web server -----------------------------------------------
