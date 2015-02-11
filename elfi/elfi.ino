@@ -73,17 +73,14 @@
  
 // INCLUDES ====================================================================
 // Cosa library ----------------------------------------------------------------
-#include "Cosa/Trace.hh"
-#include "Cosa/Watchdog.hh"
-#include "Cosa/OutputPin.hh"
-
+#include "Cosa/Driver/NEXA.hh"
 #include "Cosa/INET/DHCP.hh"
 #include "Cosa/INET/DNS.hh"
 #include "Cosa/INET/NTP.hh"
-
-#include "Cosa/Driver/NEXA.hh"
-
+#include "Cosa/OutputPin.hh"
 #include "Cosa/Socket/Driver/W5100.hh"
+#include "Cosa/Trace.hh"
+#include "Cosa/Watchdog.hh"
 
 // ElFi library ----------------------------------------------------------------
 #include "TimerActivity.h"
