@@ -3,7 +3,8 @@
  * @version 1.0
  *
  * @section License
- * Copyright (C) 2015, Alexander Sehlström
+ * Copyright (C) 2015,      Alexander Sehlström (ElFi implementation)
+ * Copyright (C) 2013-2015, Mikael Patel (Cosa libarry and related examples)
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -30,7 +31,7 @@
  * - Arduino with Ethernet Sheild
  * - RF433/TX
  * - NEXA Self learning switches, e.g. NEXA NEYC-3
- * - COSA library (Object-Oriented Platform for Arduino Programming,
+ * - Cosa library (Object-Oriented Platform for Arduino Programming,
  *   https://github.com/mikaelpatel/Cosa)
  * - Dedicated LAN IP for the Ethernet Sheild to allow easy acces
  *   to the web server on the Arduino
@@ -39,7 +40,7 @@
  * This sketch is designed for the Ethernet Shield wired
  * with a RF433/TX.
  *
- * 
+ * @code
  *                       W5100/ethernet
  *                       +------------+
  * (D10)--------------29-|CSN         |
@@ -56,6 +57,7 @@
  * (VCC)---------------3-|VCC         |                   |
  *                       |ANT       0-|-------------------+
  *                       +------------+       173 mm
+ * @endcode
  *
  * Connect the Ethernet Shield on the Arduino and then the
  * Ethernet Sheild D9 to RF433 Transmitter data in pin.
@@ -164,6 +166,10 @@ NEXA::Transmitter transmitter(Board::D9, 0xc05a01L);
  * uses a simple jQuery script to pass background GET queries triggerd by the
  * interface buttons. The interface design is controlled via a header defined
  * style (CSS).
+ *
+ * @section References
+ * 1. CosaPinWebServer.ino example file.
+ * https://github.com/mikaelpatel/Cosa/tree/master/examples/Ethernet/CosaPinWebServer
  */
 void 
 WebServer::on_request(IOStream& page, char* method, char* path, char* query)
@@ -416,6 +422,10 @@ update_RTC()
 
 /**
  * Get the current time from a NTP.
+ *
+ * @section References
+ * 1. CosaNTP.ino example file.
+ * https://github.com/mikaelpatel/Cosa/tree/master/examples/Time/CosaNTP
  */
 clock_t
 get_NTP_time()

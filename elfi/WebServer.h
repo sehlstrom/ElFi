@@ -3,7 +3,9 @@
  * @version 1.0
  *
  * @section License
- * Copyright (C) 2015, Alexander Sehlström
+ * Copyright (C) 2015,      Alexander Sehlström
+ * Copyright (C) 2013-2015, Mikael Patel (original web server implementation of
+ *                                        HTTP::Server)
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -28,8 +30,12 @@
 #define CRLF "\r\n"
 
 /**
- * Subclass of HTTP::Server, a server request handler class. Implements project specific
- * on_request() function to produce response to HTTP requests.
+ * Subclass of HTTP::Server, a server request handler class. Implements project
+ * specific on_request() function to produce response to HTTP requests.
+ *
+ * @section References
+ * 1. CosaPinWebServer.ino example file.
+ * https://github.com/mikaelpatel/Cosa/tree/master/examples/Ethernet/CosaPinWebServer
  */
 class WebServer : public HTTP::Server
 {

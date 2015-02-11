@@ -3,7 +3,7 @@
  * @version 1.0
  *
  * @section License
- * Copyright (C) 2015, Alexander Sehlström
+ * Copyright (C) 2015,      Alexander Sehlström
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -25,6 +25,14 @@
 #include "Cosa/Event.hh"
 #include "Cosa/RTC.hh"
 
+/**
+ * The device timer transmitts a given commad at a given time at specified days
+ * of the week.
+ *
+ * @section References
+ * 1. CosaActivity.ino example file for implementing the Cosa Activity class.
+ * https://github.com/mikaelpatel/Cosa/tree/master/examples/Time/CosaActivity
+ */
 class DeviceTimer : public Activity {
   public:
     /**
@@ -73,6 +81,14 @@ class DeviceTimer : public Activity {
     const uint8_t m_mode;       //!< Mode
 };
 
+/**
+ * The function timer runs a specified function at a given time at specified days
+ * of the week.
+ *
+ * @section References
+ * 1. CosaActivity.ino example file for implementing the Cosa Activity class.
+ * https://github.com/mikaelpatel/Cosa/tree/master/examples/Time/CosaActivity
+ */
 class FunctionTimer : public Activity {
   typedef void (*function_type)();
   
