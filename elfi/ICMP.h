@@ -22,9 +22,9 @@
 #ifndef ELFI_INET_ICMP_HH
 #define ELFI_INET_ICMP_HH
 
-#include "Cosa/Types.h"
-#include "Cosa/Socket.hh"
 #include "Cosa/RTC.hh"
+#include "Cosa/Socket.hh"
+#include "Cosa/Types.h"
 
 #define REQ_DATASIZE 64
 
@@ -88,17 +88,6 @@ private:
   uint8_t m_nextSeq;
   
   /**
-   * Calculate the checksum of a message_t with all fields but
-   * HEADER.CHECKSUM populated.
-   *
-   * @section Acknowledgements
-   * Checksum code by Blake Foster
-   *
-   * @section References
-   * 1. ICMPPing.cpp
-   * https://github.com/BlakeFoster/Arduino-Ping/tree/master/icmp_ping
-   * 
-   * @param[in] msg ICMP message
    * @return 16-bit unsigned integer checksum
    */
   uint16_t checksum(const ICMP::message_t& msg);
