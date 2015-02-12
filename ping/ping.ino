@@ -40,7 +40,15 @@
  *
  * This file is part of the Arduino ElFi project.
  */
- 
+
+// DEVELOPMENT MODE ============================================================
+//#define DEVMODE 1
+
+#if defined DEVMODE
+#include "Cosa/Trace.hh"
+#include "Cosa/IOStream/Driver/UART.hh"
+#endif
+
 // INCLUDES ====================================================================
 // Cosa library ----------------------------------------------------------------
 #include "Cosa/INET/DHCP.hh"
@@ -78,12 +86,19 @@ DHCP dhcp(hostname, mac);
 W5100 ethernet(mac);
 
 // MAIN PROGRAM ================================================================
-void setup() {
-  // put your setup code here, to run once:
+void setup()
+{
+ #if defined(DEVMODE)
+ uart.begin(9600);
+ trace.begin(&uart, PSTR("ElFi: start"));
+ #endif
   
   // Initiate the Ethernet Controller using DHCP
+  #if defined(DEVMODE)
   ASSERT(ethernet.begin_P(PSTR("ElFi")));
-
+  #else
+  ethernet.begin_P(PSTR("ElFi"));
+  #endif
 }
 
 void loop() {

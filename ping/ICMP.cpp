@@ -79,6 +79,7 @@ ICMP::send(uint8_t ip[4], uint8_t id, uint8_t type, uint8_t code)
   return (m_sock->flush());
 }
 
+// Parse return message needs to be added
 int
 ICMP::recv(uint8_t type, uint16_t ms)
 {
