@@ -99,4 +99,7 @@ ICMP::recv(uint8_t type, uint16_t ms)
   // Parse options
   
   // Flush any remains of the reply
+  
+  // Workaround to make code compile until function is working.
+  return -10;
 }

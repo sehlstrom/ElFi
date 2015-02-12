@@ -51,10 +51,10 @@ public:
    * @param[in] ip address to ping
    * @param[in] retries
    */
-  void ping(uint8_t ip[4], uint8_t retries);
+  void ping(uint8_t ip[4], uint8_t retries = 4);
   
 private:
-  //** ICMP packet header. */
+  /** ICMP packet header. */
   struct header_t {
     uint8_t TYPE;                    //!< Message type.
     uint8_t CODE;                    //!< Message code.
@@ -68,6 +68,14 @@ private:
     time_t TIME;                     //!< Message time.
     uint8_t PAYLOAD [REQ_DATASIZE];  //!< Message payload.
     header_t HEADER;                 //!< Message header.
+  };
+  
+  /** ICMP message reply */
+  struct reply_t {
+    message_t DATA;
+    uint8_t TTL;
+    uint8_t STATUS;
+    uint8_t IP[4];
   };
   
   /** ICMP message type */

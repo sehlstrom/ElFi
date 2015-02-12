@@ -42,7 +42,10 @@
  */
 
 // DEVELOPMENT MODE ============================================================
-//#define DEVMODE 1
+// Libraries neede to be able to print messages to terminal. No need to include
+// these if we are not currently developing the code since no terminal will be
+// connected during normal usage.
+#define DEVMODE 1
 
 #if defined DEVMODE
 #include "Cosa/Trace.hh"
