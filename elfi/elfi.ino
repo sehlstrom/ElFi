@@ -81,7 +81,6 @@
 #include "Cosa/INET/NTP.hh"
 #include "Cosa/OutputPin.hh"
 #include "Cosa/Socket/Driver/W5100.hh"
-#include "Cosa/Trace.hh"
 #include "Cosa/Watchdog.hh"
 
 // ElFi library ----------------------------------------------------------------
@@ -455,7 +454,9 @@ get_NTP_time()
   clock_t clock;
   for (uint8_t retry = 0; retry < RETRY_MAX; retry++)
     if ((clock = ntp.time()) != 0L) break;
+  #if defined(DEVMODE)
   ASSERT(clock != 0L);
+  #endif
 
   return clock;
 }
@@ -475,10 +476,18 @@ setup()
   scheduler.begin();
 
   // Initiate the Ethernet Controller using DHCP
+  #if defined(DEVMODE)
   ASSERT(ethernet.begin_P(PSTR("ElFi")));
+  #else
+  ethernet.begin_P(PSTR("ElFi"));
+  #endif
   
   // Start the server
+  #if defined(DEVMODE)
   ASSERT(server.begin(ethernet.socket(Socket::TCP, PORT)));
+  #else
+  server.begin(ethernet.socket(Socket::TCP, PORT));
+  #endif
 
   // Clock settings
   time_t::epoch_year( NTP_EPOCH_YEAR );
