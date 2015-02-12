@@ -43,6 +43,13 @@ makeUint16(const uint8_t& highOrder, const uint8_t& lowOrder)
     return *(uint16_t *)&value;
 }
 
+// This shoudl not be void, it should return some useful information
+void
+ICMP::ping(uint8_t ip[4], uint8_t retries)
+{
+  send(ip, (uint16_t)random(), ICMP_ECHO_REQUEST, 0);
+}
+
 // The function needs development. The IP address needs to be passed and a connection established. 
 int
 ICMP::send(uint8_t ip[4], uint8_t id, uint8_t type, uint8_t code) {

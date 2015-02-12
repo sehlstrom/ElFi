@@ -46,6 +46,13 @@ public:
    */
   ICMP();
   
+  /**
+   * Send a ping to given IP address.
+   * @param[in] ip address to ping
+   * @param[in] retries
+   */
+  void ping(uint8_t ip[4], uint8_t retries);
+  
 private:
   //** ICMP packet header. */
   struct header_t {
