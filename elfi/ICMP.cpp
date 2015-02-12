@@ -43,33 +43,6 @@ makeUint16(const uint8_t& highOrder, const uint8_t& lowOrder)
     return *(uint16_t *)&value;
 }
 
-uint16_t
-ICMP::checksum(const ICMP::message_t& msg)
-{
-    unsigned long sum = 0;
-
-    // add the header, bytes reversed since we're using little-endian arithmetic.
-    sum += makeUint16(msg.HEADER.TYPE, msg.HEADER.CODE);
-
-    // add id and sequence
-    sum += msg.ID + msg.SEQ;
-
-    // add time, one half at a time.
-    uint16_t const * time = (uint16_t const *)&msg.TIME;
-    sum += *time + *(time + 1);
-    
-    // add the payload
-    for (uint8_t const * b = msg.PAYLOAD; b < msg.PAYLOAD + sizeof(msg.PAYLOAD); b+=2)
-    {
-        sum += makeUint16(*b, *(b + 1));
-    }
-
-    // ones complement of ones complement sum
-    sum = (sum >> 16) + (sum & 0xffff);
-    sum += (sum >> 16);
-    return ~sum;
-}
-
 // The function needs development. The IP address needs to be passed and a connection established. 
 int
 ICMP::send(uint8_t ip[4], uint8_t id, uint8_t type, uint8_t code) {
@@ -86,7 +59,7 @@ ICMP::send(uint8_t ip[4], uint8_t id, uint8_t type, uint8_t code) {
   memset(&header, 0, sizeof(header));
   header.TYPE = type;
   header.CODE = code;
-  header.CHECKSUM = checksum(msg);
+  header.CHECKSUM = INET::checksum(&msg, sizeof(msg));
   int res = m_sock->write(&header, sizeof(header));
   if (res < 0) return (-1);
   

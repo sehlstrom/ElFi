@@ -22,6 +22,7 @@
 #ifndef ELFI_INET_ICMP_HH
 #define ELFI_INET_ICMP_HH
 
+#include "Cosa/INET.hh"
 #include "Cosa/RTC.hh"
 #include "Cosa/Socket.hh"
 #include "Cosa/Types.h"
@@ -86,11 +87,6 @@ private:
   Socket* m_sock;
   
   uint8_t m_nextSeq;
-  
-  /**
-   * @return 16-bit unsigned integer checksum
-   */
-  uint16_t checksum(const ICMP::message_t& msg);
   
   /**
    * Send a ICMP message to given IP address. Return zero if successful
