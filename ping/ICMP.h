@@ -47,11 +47,19 @@ public:
   ICMP();
   
   /**
+   * Start interaction using ICMP. Provide IPRAW socket.
+   * Returns true if successful otherwise false.
+   * @param[in] sock connection-less socket (IPRAW/ICMP).
+   * @return bool, true if successful otherwise false.
+   */
+  bool begin(Socket* sock);
+  
+  /**
    * Send a ping to given IP address.
    * @param[in] ip address to ping
    * @param[in] retries
    */
-  void ping(uint8_t ip[4], uint8_t retries = 4);
+  int ping(uint8_t ip[4], uint8_t retries = 4);
   
 private:
   /** ICMP packet header. */
@@ -106,21 +114,23 @@ private:
   /**
    * Send a ICMP message to given IP address. Return zero if successful
    * otherwise negative error code.
-   * @param[in] ip 
-   * @param[in] id
+   * @param[in] ip destination
    * @param[in] type ICMP message type option.
-   * @param[in] code ICMP message code option.
+   * @param[in] code ICMP message code option (default 0)
    * @return zero if successful otherwise negative error code.
    */
-  int send(uint8_t ip[4], uint8_t id,  uint8_t type, uint8_t code);
+  int send(uint8_t ip[4], uint8_t type, uint8_t code = 0);
   
   /**
    * Receive response of given type within the given time limit.
    * Return zero if successful otherwise negative error code.
    * @param[in] type ICMP message type option.
+   * @param[in] code ICMP message code option (default 0)
    * @return zero if successful otherwise negative error code.
    */
-  int recv(uint8_t type, uint16_t ms = 2000);
+  int recv(uint8_t ip[4], uint8_t type, uint8_t code = 0, uint16_t ms = 2000);
+  
+  Socket* socket(Socket::Protocol proto, uint16_t port = 0, uint8_t flag = 0);
 };
 
 #endif

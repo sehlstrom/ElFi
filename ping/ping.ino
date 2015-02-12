@@ -89,7 +89,7 @@ W5100 ethernet(mac);
 ICMP icmp;
 
 // IP address to ping
-uint8_t pingIp[] = { 10 , 0 , 1 , 175 };
+uint8_t pingIp[] = { 10 , 0 , 1 , 175 }; // 102 computer, 175 phone
 
 // Number of retries
 uint8_t pingTimeout = 4;
@@ -108,9 +108,17 @@ void setup()
   #else
   ethernet.begin_P(hostname);
   #endif
+  
+  icmp.begin(ethernet.socket(Socket::IPRAW));
 }
 
 void loop()
 {
-  icmp.ping(pingIp , pingTimeout);
+  int res = icmp.ping(pingIp);
+  
+  #if defined(DEVMODE)
+  trace << PSTR("Result ") << res << endl;
+  #endif
+  
+  delay( 3000 ) ;
 }

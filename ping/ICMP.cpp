@@ -18,6 +18,17 @@
  * This file is part of the Arduino ElFi project.
  * The file is under development and has not been tested.
  */
+
+// DEVELOPMENT MODE ============================================================
+// Libraries neede to be able to print messages to terminal. No need to include
+// these if we are not currently developing the code since no terminal will be
+// connected during normal usage.
+#define DEVMODE 1
+
+#if defined DEVMODE
+#include "Cosa/Trace.hh"
+#include "Cosa/IOStream/Driver/UART.hh"
+#endif
  
 #include "ICMP.h"
 
@@ -48,22 +59,40 @@ ICMP::ICMP() :
 {
 }
 
-// This shoudl not be void, it should return some useful information
-void
+// Should return something more useful
+int
 ICMP::ping(uint8_t ip[4], uint8_t retries)
-{
-  send(ip, (uint16_t)random(), ICMP_ECHO_REQUEST, 0);
+{  
+  return send(ip, ICMP_ECHO_REQUEST);
+  
+  return recv(ip, ICMP_ECHO_REQUEST);
 }
 
-// The function needs development. The IP address needs to be passed and a connection established. 
-int
-ICMP::send(uint8_t ip[4], uint8_t id, uint8_t type, uint8_t code)
+bool
+ICMP::begin(Socket* sock)
 {
+  if (m_sock != NULL) return (false);
+  m_sock = sock;
+  return (true);
+}
+
+int
+ICMP::send(uint8_t ip[4], uint8_t type, uint8_t code)
+{
+  // Check if we have a socket
+  if (m_sock == NULL) return (-2);
+  
+  #if defined(DEVMODE)
+  trace << PSTR("Socket protocol ") << m_sock->get_proto() << endl
+        << PSTR("Socket port ") << m_sock->get_port() << endl;
+  #endif
+  
+  // Start constructing the message
   message_t msg;
   header_t header;
   
   // Start the construction of the message
-  msg.ID = id;
+  msg.ID = (uint16_t)random();
   msg.SEQ = m_nextSeq++;
   msg.TIME = RTC::time();
   msg.HEADER = header;
@@ -73,7 +102,7 @@ ICMP::send(uint8_t ip[4], uint8_t id, uint8_t type, uint8_t code)
   header.TYPE = type;
   header.CODE = code;
   header.CHECKSUM = INET::checksum(&msg, sizeof(msg));
-  int res = m_sock->write(&header, sizeof(header));
+  int res = m_sock->send(&header, sizeof(header), ip, 0, false);    // NOT WORKING: FUNCTION IS PROTECTED!
   if (res < 0) return (-1);
   
   return (m_sock->flush());
@@ -81,7 +110,7 @@ ICMP::send(uint8_t ip[4], uint8_t id, uint8_t type, uint8_t code)
 
 // Parse return message needs to be added
 int
-ICMP::recv(uint8_t type, uint16_t ms)
+ICMP::recv(uint8_t ip[4], uint8_t type, uint8_t code, uint16_t ms)
 {
   // Wait for a reply
   int res = 0;
@@ -89,12 +118,12 @@ ICMP::recv(uint8_t type, uint16_t ms)
     if ((res = m_sock->available()) != 0) break;
     delay(32);
   }
-  if (res == 0) return (-2);
+  if (res == 0) return (-1);
   
   // Read response message
   header_t header;
   res = m_sock->recv(&header, sizeof(header));
-  if (res <= 0) return (-1);
+  if (res <= 0) return (-2);
   
   // Parse options
   
