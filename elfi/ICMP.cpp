@@ -52,7 +52,8 @@ ICMP::ping(uint8_t ip[4], uint8_t retries)
 
 // The function needs development. The IP address needs to be passed and a connection established. 
 int
-ICMP::send(uint8_t ip[4], uint8_t id, uint8_t type, uint8_t code) {
+ICMP::send(uint8_t ip[4], uint8_t id, uint8_t type, uint8_t code)
+{
   message_t msg;
   header_t header;
   

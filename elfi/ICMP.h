@@ -97,11 +97,11 @@ private:
   
   /**
    * Send a ICMP message to given IP address. Return zero if successful
-   * otherwise negative error coe.
+   * otherwise negative error code.
    * @param[in] ip 
    * @param[in] id
-   * @param[in] type
-   * @param[in] code
+   * @param[in] type ICMP message type option.
+   * @param[in] code ICMP message code option.
    * @return zero if successful otherwise negative error code.
    */
   int send(uint8_t ip[4], uint8_t id,  uint8_t type, uint8_t code);
