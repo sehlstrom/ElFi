@@ -108,13 +108,11 @@ void setup()
   #else
   ethernet.begin_P(hostname);
   #endif
-  
-  icmp.begin(ethernet.socket(Socket::IPRAW));
 }
 
 void loop()
 {
-  int res = icmp.ping(pingIp);
+  int res = icmp.ping(ethernet.socket(Socket::IPRAW), pingIp);
   
   #if defined(DEVMODE)
   trace << PSTR("Result ") << res << endl;

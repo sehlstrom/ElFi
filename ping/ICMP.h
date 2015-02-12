@@ -55,11 +55,17 @@ public:
   bool begin(Socket* sock);
   
   /**
+   * Stop interaction using ICMP server. Closes socket.
+   * Returns true if successful otherwise false.
+   */
+  bool end();
+  
+  /**
    * Send a ping to given IP address.
    * @param[in] ip address to ping
    * @param[in] retries
    */
-  int ping(uint8_t ip[4], uint8_t retries = 4);
+  int ping(Socket* sock, uint8_t ip[4], uint8_t retries = 4);
   
 private:
   /** ICMP packet header. */

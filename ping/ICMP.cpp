@@ -61,11 +61,15 @@ ICMP::ICMP() :
 
 // Should return something more useful
 int
-ICMP::ping(uint8_t ip[4], uint8_t retries)
-{  
+ICMP::ping(Socket* sock, uint8_t ip[4], uint8_t retries)
+{ 
+  begin(sock);
+  
   return send(ip, ICMP_ECHO_REQUEST);
   
   return recv(ip, ICMP_ECHO_REQUEST);
+  
+  end();
 }
 
 bool
@@ -73,6 +77,15 @@ ICMP::begin(Socket* sock)
 {
   if (m_sock != NULL) return (false);
   m_sock = sock;
+  return (true);
+}
+
+bool
+ICMP::end()
+{
+  if (m_sock == NULL) return (false);
+  m_sock->close();
+  m_sock = NULL;
   return (true);
 }
 
