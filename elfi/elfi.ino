@@ -76,7 +76,6 @@
 // INCLUDES ====================================================================
 // Cosa library ----------------------------------------------------------------
 #include "Cosa/Driver/NEXA.hh"
-#include "Cosa/INET/DHCP.hh"
 #include "Cosa/INET/DNS.hh"
 #include "Cosa/INET/NTP.hh"
 #include "Cosa/OutputPin.hh"
@@ -141,9 +140,6 @@ static const uint8_t mac[6] __PROGMEM = { MAC };
 
 // Host name
 static const char hostname[] __PROGMEM = "ElFi";
-
-// DHCP
-DHCP dhcp(hostname, mac);
 
 // Ethernet
 W5100 ethernet(mac);
@@ -477,9 +473,9 @@ setup()
 
   // Initiate the Ethernet Controller using DHCP
   #if defined(DEVMODE)
-  ASSERT(ethernet.begin_P(PSTR("ElFi")));
+  ASSERT(ethernet.begin_P(hostname));
   #else
-  ethernet.begin_P(PSTR("ElFi"));
+  ethernet.begin_P(hostname);
   #endif
   
   // Start the server
