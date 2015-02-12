@@ -72,3 +72,24 @@ ICMP::send(uint8_t ip[4], uint8_t id, uint8_t type, uint8_t code) {
   
   return (m_sock->flush());
 }
+
+int
+ICMP::recv(uint8_t type, uint16_t ms)
+{
+  // Wait for a reply
+  int res = 0;
+  for (uint16_t i = 0; i < ms; i += 32) {
+    if ((res = m_sock->available()) != 0) break;
+    delay(32);
+  }
+  if (res == 0) return (-2);
+  
+  // Read response message
+  header_t header;
+  res = m_sock->recv(&header, sizeof(header));
+  if (res <= 0) return (-1);
+  
+  // Parse options
+  
+  // Flush any remains of the reply
+}

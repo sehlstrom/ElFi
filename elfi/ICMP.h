@@ -105,6 +105,14 @@ private:
    * @return zero if successful otherwise negative error code.
    */
   int send(uint8_t ip[4], uint8_t id,  uint8_t type, uint8_t code);
+  
+  /**
+   * Receive response of given type within the given time limit.
+   * Return zero if successful otherwise negative error code.
+   * @param[in] type ICMP message type option.
+   * @return zero if successful otherwise negative error code.
+   */
+  int recv(uint8_t type, uint16_t ms = 2000);
 };
 
 #endif
