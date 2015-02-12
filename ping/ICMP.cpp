@@ -43,6 +43,11 @@ makeUint16(const uint8_t& highOrder, const uint8_t& lowOrder)
     return *(uint16_t *)&value;
 }
 
+ICMP::ICMP() :
+  m_sock(NULL)
+{
+}
+
 // This shoudl not be void, it should return some useful information
 void
 ICMP::ping(uint8_t ip[4], uint8_t retries)
