@@ -85,6 +85,16 @@ DHCP dhcp(hostname, mac);
 // Ethernet
 W5100 ethernet(mac);
 
+// ICMP ------------------------------------------------------------------------
+// ICMP
+ICMP icmp;
+
+// IP address to ping
+uint8_t pingIp[] = { 10 , 0 , 1 , 175 };
+
+// Number of retries
+uint8_t pingTimeout = 4;
+
 // MAIN PROGRAM ================================================================
 void setup()
 {
@@ -101,9 +111,7 @@ void setup()
   #endif
 }
 
-void loop() {
-  // put your main code here, to run repeatedly:
-  
-  ICMP::ping( , );
-
+void loop()
+{
+  icmp.ping(pingIp , pingTimeout);
 }
