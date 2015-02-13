@@ -64,6 +64,7 @@ public:
   
   /**
    * Send a ping to given IP address.
+   * @param[in] sock connection-less socket (IPRAW/ICMP).
    * @param[in] ip address to ping
    * @param[in] retries
    */
