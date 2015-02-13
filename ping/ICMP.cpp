@@ -115,9 +115,27 @@ ICMP::send(uint8_t ip[4], uint8_t type, uint8_t code)
   header.TYPE = type;
   header.CODE = code;
   header.CHECKSUM = INET::checksum(&msg, sizeof(msg));
+  
+  #if defined(DEVMODE)
+  trace << PSTR("MESSAGE TO SEND (") 
+        << ip[0] << "." << ip[1] << "."
+        << ip[2] << "." << ip[3] << ":" 
+        << PORT << ")" << endl
+        << PSTR("  Header.Type: ") << msg.HEADER.TYPE << endl
+        << PSTR("  Header.Code: ") << msg.HEADER.CODE << endl
+        << PSTR("  Header.Checksum: ") << msg.HEADER.CHECKSUM << endl
+        << PSTR("  Id: ") << msg.ID << endl
+        << PSTR("  Seq: ") << msg.SEQ << endl
+        << PSTR("  Time: ") << msg.TIME << endl;
+  #endif
+  
   // Send the message
   int res = m_sock->send(&msg, sizeof(msg), ip, PORT);
   if (res < 0) return (-1);
+  
+  #if defined(DEVMODE)
+  trace << PSTR("MESSAGE SENT") << endl;
+  #endif
   
   return (m_sock->flush());
 }
@@ -126,18 +144,48 @@ ICMP::send(uint8_t ip[4], uint8_t type, uint8_t code)
 int
 ICMP::recv(uint8_t ip[4], uint8_t type, uint8_t code, uint16_t ms)
 {
-  // Wait for a reply
+  #if defined(DEVMODE)
+  trace << PSTR("WAITING FOR RESPONSE ");
+  #endif
+  
   int res = 0;
+  
+  // Wait for a reply
   for (uint16_t i = 0; i < ms; i += 32) {
     if ((res = m_sock->available()) != 0) break;
     delay(32);
+    #if defined(DEVMODE)
+    trace << PSTR(".");
+    #endif
   }
+  #if defined(DEVMODE)
+  trace << endl;
+  if (res == 0) {
+    trace << PSTR("  No response received") << endl;
+    return (-1);
+  }
+  trace << PSTR("  Response received") << endl;
+  #else
   if (res == 0) return (-1);
+  #endif
   
   // Read response message
   header_t header;
   res = m_sock->recv(&header, sizeof(header));
   if (res <= 0) return (-2);
+  
+  #if defined(DEVMODE)
+  trace << PSTR("RESPONSE MESSAGE (")
+        << ip[0] << "." << ip[1] << "."
+        << ip[2] << "." << ip[3] << ":" 
+        << port << ")" << endl
+        << PSTR("  Header.Type: ") << msg.HEADER.TYPE << endl
+        << PSTR("  Header.Code: ") << msg.HEADER.CODE << endl
+        << PSTR("  Header.Checksum: ") << msg.HEADER.CHECKSUM << endl
+        << PSTR("  Id: ") << msg.ID << endl
+        << PSTR("  Seq: ") << msg.SEQ << endl
+        << PSTR("  Time: ") << msg.TIME << endl;
+  #endif
   
   // Parse options
   
