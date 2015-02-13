@@ -137,8 +137,6 @@ private:
    * @return zero if successful otherwise negative error code.
    */
   int recv(uint8_t ip[4], uint8_t type, uint8_t code = 0, uint16_t ms = 2000);
-  
-  Socket* socket(Socket::Protocol proto, uint16_t port = 0, uint8_t flag = 0);
 };
 
 #endif
