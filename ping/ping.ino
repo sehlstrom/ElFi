@@ -54,6 +54,8 @@
 
 // INCLUDES ====================================================================
 // Cosa library ----------------------------------------------------------------
+#include "Cosa/INET/DNS.hh"
+#include "Cosa/INET/NTP.hh"
 #include "Cosa/Socket/Driver/W5100.hh"
 
 // ElFi library ----------------------------------------------------------------
@@ -94,19 +96,90 @@ uint8_t pingIp[] = { 10 , 0 , 1 , 175 }; // 102 computer, 175 phone
 // Number of retries
 uint8_t pingTimeout = 4;
 
+// Time ------------------------------------------------------------------------
+#define TIME_ZONE 1                              // Time-zone; GMT+1, Stockholm
+#define TIME_NTP_SERVER "se.pool.ntp.org"        // NTP server; se.pool.ntp.org
+
+// FUNCTIONS ===================================================================
+// Time functions --------------------------------------------------------------
+/**
+ * Update the Real Time Clock on the Arduino. Also updates the time in all the
+ * alarms and activities.
+ */
+void
+update_RTC()
+{
+  // Update the RTC
+  RTC::time(get_NTP_time());
+}
+
+/**
+ * Get the current time from a NTP.
+ *
+ * @section Acknowledgements
+ * The function is based on the Cosa NTP example related to the Cosa
+ * library by Mikael Patel. See references for more details.
+ *
+ * @section References
+ * 1. CosaNTP.ino example file.
+ * https://github.com/mikaelpatel/Cosa/tree/master/examples/Time/CosaNTP
+ */
+clock_t
+get_NTP_time()
+{
+  uint8_t server[4];
+
+  // Use DNS to get the NTP server network address
+  DNS dns;
+  ethernet.get_dns_addr(server);
+  if (!dns.begin(ethernet.socket(Socket::UDP), server)) return 0L;
+  if (dns.gethostbyname_P(PSTR(TIME_NTP_SERVER), server) != 0) return 0L;
+
+  // Connect to the NTP server using given socket
+  NTP ntp(ethernet.socket(Socket::UDP), server, TIME_ZONE);
+
+  // Get current time. Allow a number of retries
+  const uint8_t RETRY_MAX = 20;
+  clock_t clock;
+  for (uint8_t retry = 0; retry < RETRY_MAX; retry++)
+    if ((clock = ntp.time()) != 0L) break;
+  #if defined(DEVMODE)
+  ASSERT(clock != 0L);
+  #endif
+
+  return clock;
+}
+
 // MAIN PROGRAM ================================================================
 void setup()
 {
- #if defined(DEVMODE)
- uart.begin(9600);
- trace.begin(&uart, PSTR("ElFi: start"));
- #endif
+  #if defined(DEVMODE)
+  uart.begin(9600);
+  trace.begin(&uart, PSTR("ElFi: start"));
+  #endif
+  
+  // Start the watchdog, real-time clock and the alarm scheduler
+  RTC::begin();
   
   // Initiate the Ethernet Controller using DHCP
   #if defined(DEVMODE)
   ASSERT(ethernet.begin_P(hostname));
   #else
   ethernet.begin_P(hostname);
+  #endif
+  
+  // Clock settings
+  time_t::epoch_year( NTP_EPOCH_YEAR );
+  time_t::epoch_weekday = NTP_EPOCH_WEEKDAY;
+  time_t::pivot_year = 37; // 1937..2036 range
+
+  // Set the clock
+  update_RTC();
+  
+  #if defined(DEVMODE)
+  // Print current time
+  time_t time = RTC::time();
+  trace << PSTR("Current time ") << time << endl;
   #endif
 }
 
