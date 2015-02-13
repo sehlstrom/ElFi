@@ -65,11 +65,13 @@ ICMP::ping(Socket* sock, uint8_t ip[4], uint8_t retries)
 { 
   begin(sock);
   
-  return send(ip, ICMP_ECHO_REQUEST);
+  int res = send(ip, ICMP_ECHO_REQUEST);
   
-  return recv(ip, ICMP_ECHO_REQUEST);
+  res = recv(ip, ICMP_ECHO_REPLY);
   
   end();
+  
+  return res;
 }
 
 bool
