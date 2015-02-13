@@ -115,7 +115,8 @@ ICMP::send(uint8_t ip[4], uint8_t type, uint8_t code)
   header.TYPE = type;
   header.CODE = code;
   header.CHECKSUM = INET::checksum(&msg, sizeof(msg));
-  int res = m_sock->send(&header, sizeof(header), ip, 0, false);    // NOT WORKING: FUNCTION IS PROTECTED!
+  // Send the message
+  int res = m_sock->send(&msg, sizeof(msg), ip, PORT);
   if (res < 0) return (-1);
   
   return (m_sock->flush());

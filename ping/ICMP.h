@@ -41,6 +41,8 @@
  */
 class ICMP {
 public:
+  static const uint16_t PORT = 0;
+  
   /**
    *
    */
