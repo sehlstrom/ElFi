@@ -170,8 +170,9 @@ ICMP::recv(uint8_t ip[4], uint8_t type, uint8_t code, uint16_t ms)
   #endif
   
   // Read response message
-  header_t header;
-  res = m_sock->recv(&header, sizeof(header));
+  message_t msg;
+  uint16_t port;
+  res = m_sock->recv(&msg, sizeof(msg), ip, port);
   if (res <= 0) return (-2);
   
   #if defined(DEVMODE)
