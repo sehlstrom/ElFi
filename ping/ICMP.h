@@ -79,11 +79,11 @@ private:
   
   /** ICMP message to echo. */
   struct message_t {
+    header_t HEADER;                 //!< Message header.
     uint16_t ID;                     //!< Message id.
     uint16_t SEQ;                    //!< Message sequence number.
     time_t TIME;                     //!< Message time.
     uint8_t PAYLOAD [REQ_DATASIZE];  //!< Message payload.
-    header_t HEADER;                 //!< Message header.
   };
   
   /** ICMP message reply */

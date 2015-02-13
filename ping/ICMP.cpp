@@ -104,14 +104,14 @@ ICMP::send(uint8_t ip[4], uint8_t type, uint8_t code)
   message_t msg;
   header_t header;
   
-  // Start the construction of the message
+  // Construct the message
+  msg.HEADER = header;
   msg.ID = (uint16_t)random();
   msg.SEQ = m_nextSeq++;
   msg.TIME = RTC::time();
-  msg.HEADER = header;
   
   // Construct the message header
-  memset(&header, 0, sizeof(header));
+  memset(&header, 0, sizeof(header)); // This is necessary, but I do not know why.
   header.TYPE = type;
   header.CODE = code;
   header.CHECKSUM = INET::checksum(&msg, sizeof(msg));
