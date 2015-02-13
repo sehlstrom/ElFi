@@ -97,10 +97,8 @@ ICMP::send(uint8_t ip[4], uint8_t type, uint8_t code)
   // Check if we have a socket
   if (m_sock == NULL) return (-2);
   
-  #if defined(DEVMODE)
-  trace << PSTR("Socket protocol ") << m_sock->get_proto() << endl
-        << PSTR("Socket port ") << m_sock->get_port() << endl;
-  #endif
+  // Check if we have the right protocol
+  if (!m_sock->get_proto() == Socket::IPRAW) return (-3);
   
   // Start constructing the message
   message_t msg;
