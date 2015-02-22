@@ -1,6 +1,6 @@
 /**
- * @flie elfi.ino
- * @version 1.1
+ * @flie maincontrol.ino
+ * @version 1.0
  *
  * @section License
  * Copyright (C) 2015,      Alexander Sehlström (ElFi implementation)
@@ -31,12 +31,12 @@
  *
  * To reduce unnecessary memory usage, it is essential that ElFi is
  * configured properly at compile time. This is done by defining a few
- * values prior to including ELFI.h:
+ * values in the library file ELFI.h:
  * - NEXA_SWITCHES      The number of NEXA switches that ElFi shall
  *                      controll. Default and maximum is 16.
  * - NEXA_ACTIVITIES    The number of NEXA activities to use. Each
  *                      Activity is rather memory consuming so choose
- *                      the number wisely.
+ *                      the number wisely. Default is 5.
  * - NTP_TIME_ZONE      Offset from GMT. Default is 1.
  * - NTP_SERVER         NTP server to use. Default is "se.pool.ntp.org"
  *
@@ -77,9 +77,6 @@
  *
  * This file is part of the Arduino ElFi project.
  */
- 
-//#define NEXA_SWITCHES 3
-//#define NEXA_ACTIVITIES 4
 
 #include "ELFI.h"
 

@@ -19,28 +19,20 @@
 // NEXA settings ===============================================================
 // Maximum number of NEXA Switches to use.
 // Set as low as posiblie to save dynamic memory.
-#ifndef NEXA_SWITCHES
 #define NEXA_SWITCHES 16
-#endif
 
 // Maximim number of NEXA Activities to use.
 // Set as low as posiblie to save dynamic memory.
-#ifndef NEXA_ACTIVITIES
 #define NEXA_ACTIVITIES 5
-#endif
 // -----------------------------------------------------------------------------
 
 // NTP settings ================================================================
 // Time-zone to use. Specify offset hour from GMT
 // 1 : GMT+1, Stockholm
-#ifndef NTP_TIME_ZONE
 #define NTP_TIME_ZONE 1
-#endif
 
 // NTP server tu use
-#ifndef NTP_SERVER
 #define NTP_SERVER "se.pool.ntp.org"
-#endif
 // -----------------------------------------------------------------------------
 
 // Weekday alarm settings ======================================================
@@ -108,7 +100,6 @@ class ELFI
      * @param[in] m minute to dispatch activity on
      * @param[in] mode to switch to at dispatch
      * @param[in] sid ID of NEXA Switch to be switched; if no value is provided, all NEXA Switches are switched to given mode
-     
      */
     bool activate_NEXA_Activity(uint8_t id, String str, const bool (&d)[7], uint8_t h, uint8_t m, uint8_t mode, uint8_t sid = NEXA_SWITCHES);
     
