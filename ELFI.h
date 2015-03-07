@@ -38,11 +38,11 @@
 // Weekday alarm settings ======================================================
 // Common days of the week to dispatch a alarm on. The alarm will be dispatched
 // on all true days and not on all false days.
-// The week begins on sunday.
+// The week begins on Monday.
 static const bool ALLDAYS[7] __PROGMEM = {true, true, true, true, true, true, true};
-static const bool BEFOREWORKDAY[7] __PROGMEM = { true, true, true, true, true, false, false };
-static const bool WEEKDAYS[7] __PROGMEM = { false, true, true, true, true, true, false };
-static const bool WEEKENDDAYS[7] __PROGMEM = { true, false, false, false, false, false, true };
+static const bool BEFOREWORKDAY[7] __PROGMEM = { true, true, true, true, false, false, true };
+static const bool WEEKDAYS[7] __PROGMEM = { true, true, true, true, true, false, false };
+static const bool WEEKENDDAYS[7] __PROGMEM = { false, false, false, false, false, true, true };
 // -----------------------------------------------------------------------------
 
 class ELFI
