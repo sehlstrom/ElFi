@@ -206,7 +206,7 @@ ELFI::get_NTP_time()
   if (dns.gethostbyname_P(PSTR(NTP_SERVER), server) != 0) return 0L;
 
   // Connect to the NTP server using given socket
-  NTP ntp(m_ethernet->socket(Socket::UDP), server, NTP_TIME_ZONE);
+  NTP ntp(m_ethernet->socket(Socket::UDP), server, NTP_TIME_ZONE + NTP_SUMMER_TIME);
 
   // Get current time. Allow a number of retries
   const uint8_t RETRY_MAX = 20;

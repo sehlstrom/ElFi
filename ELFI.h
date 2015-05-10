@@ -30,6 +30,7 @@
 // Time-zone to use. Specify offset hour from GMT
 // 1 : GMT+1, Stockholm
 #define NTP_TIME_ZONE 1
+#define NTP_SUMMER_TIME 1
 
 // NTP server tu use
 #define NTP_SERVER "se.pool.ntp.org"
