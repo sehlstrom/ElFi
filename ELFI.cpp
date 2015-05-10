@@ -228,7 +228,7 @@ ELFI::NEXAActivity::enable()
   start.seconds = 0;
   
   // Pass first time (in seconds after epoch time)
-  // for the first occurence of the activity.
+  // for the first occurrence of the activity.
   // The activity will be repeated each 1440 s = 24 h.
   clock_t start_clock = start;
   set_time(start_clock, 1, 1440);
@@ -263,14 +263,14 @@ ELFI::NEXAActivity::run()
 
 /**
  * The HTML page provided on request is Apple Web Application compatible. It
- * uses a simple jQuery script to pass background GET queries triggerd by the
+ * uses a simple jQuery script to pass background GET queries triggered by the
  * interface buttons. The interface design is controlled via a header defined
  * style (CSS).
  *
  * @section Acknowledgements
- * Kudos to Mikael Patel for the the idea of putting large static peices of text
+ * Kudos to Mikael Patel for the the idea of putting large static pieces of text
  * in the program memory; this approach reduced the usage of dynamic memory
- * substantionally. See references and WebServer.h for more details.
+ * substantially. See references and WebServer.h for more details.
  *
  * @section References
  * 1. CosaPinWebServer.ino example file.
@@ -389,7 +389,7 @@ ELFI::WebServer::on_request(IOStream& page, char* method, char* path, char* quer
       "</span>" CRLF
       "</div>" CRLF;
     
-    // Cnstruct end div
+    // Construct end div
     static const char body_enddiv[] __PROGMEM = 
       "</div>";
       
